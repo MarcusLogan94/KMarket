@@ -10,7 +10,7 @@ namespace KMarket.Data
 {
     //defines the order class for tracking orders of a specific type of item
     //(one item type at a time right now, not multiple items in order)
-    public class Order
+    public class OrderMeal
     {
 
         [Key]
@@ -21,12 +21,12 @@ namespace KMarket.Data
 
         public Guid LastModifiedID { get; set; }
 
-        //[ForeignKey("Object")]
+        [ForeignKey("Meal")]
         [Required]
-        public int ObjectID { get; set; }
+        public int MealID { get; set; }
+        [Required]
 
-        [Required]
-        public string OrderType { get; set; }
+        public KCafeMeal Meal { get; set; }
 
         [Required]
         public int Quantity { get; set; }

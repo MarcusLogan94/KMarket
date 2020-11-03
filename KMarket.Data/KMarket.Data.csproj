@@ -99,8 +99,13 @@
     <Compile Include="Migrations\202011021907523_Migration2.Designer.cs">
       <DependentUpon>202011021907523_Migration2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011032108307_migration3.cs" />
+    <Compile Include="Migrations\202011032108307_migration3.Designer.cs">
+      <DependentUpon>202011032108307_migration3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Note.cs" />
+    <Compile Include="OrderMeal.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -117,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011021907523_Migration2.resx">
       <DependentUpon>202011021907523_Migration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011032108307_migration3.resx">
+      <DependentUpon>202011032108307_migration3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

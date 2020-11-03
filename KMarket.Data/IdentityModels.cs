@@ -41,6 +41,8 @@ namespace KMarket.Data
 
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<OrderMeal> OrderMeals { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder
