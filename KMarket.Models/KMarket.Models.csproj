@@ -54,10 +54,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OrderListItem.cs" />
+    <Compile Include="OrderItemListItem.cs" />
+    <Compile Include="OrderItemEdit.cs" />
+    <Compile Include="OrderItemDetail.cs" />
+    <Compile Include="KGrocerItemListItem.cs" />
+    <Compile Include="KGrocerItemEdit.cs" />
+    <Compile Include="KGrocerItemDetail.cs" />
+    <Compile Include="KGrocerItemCreate.cs" />
     <Compile Include="KCafeMealCreate.cs" />
     <Compile Include="KCafeMealDetail.cs" />
     <Compile Include="KCafeMealEdit.cs" />
     <Compile Include="KCafeMealListItem.cs" />
+    <Compile Include="OrderItemCreate.cs" />
+    <Compile Include="OrderEdit.cs" />
+    <Compile Include="OrderDetail.cs" />
+    <Compile Include="OrderCreate.cs" />
     <Compile Include="NoteCreate.cs" />
     <Compile Include="NoteDetail.cs" />
     <Compile Include="NoteEdit.cs" />

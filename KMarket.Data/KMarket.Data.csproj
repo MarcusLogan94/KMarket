@@ -85,13 +85,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityModels.cs" />
+    <Compile Include="KGrocerItem.cs" />
     <Compile Include="KCafeMeal.cs" />
+    <Compile Include="Migrations\202011041440318_migration2.cs" />
+    <Compile Include="Migrations\202011041440318_migration2.Designer.cs">
+      <DependentUpon>202011041440318_migration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="OrderItem.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202011041440318_migration2.resx">
+      <DependentUpon>202011041440318_migration2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
