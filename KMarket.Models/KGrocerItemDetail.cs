@@ -15,11 +15,16 @@ namespace KMarket.Models
         public string Description { get; set; }
         public string Category { get; set; }
 
-        [Display(Name = "Added")]
+        public int DaysToExpire { get; set; }
+
+        [Display(Name = "Created")]
         public DateTimeOffset AddedUTC { get; set; }
+
         [Display(Name = "Modified")]
         public DateTimeOffset? ModifiedUtc { get; set; }
-        public int DaysToExpire { get; set; }
+
+       
+
 
     }
 }

@@ -54,6 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OrderMealService.cs" />
+    <Compile Include="OrderService.cs" />
+    <Compile Include="KGrocerItemService.cs" />
+    <Compile Include="KCafeMealService.cs" />
     <Compile Include="KGrocerItemService.cs" />
     <Compile Include="KCafeMealService.cs" />
     <Compile Include="OrderService.cs" />

@@ -10,8 +10,10 @@ using System.Web.Http;
 
 namespace KMarket.WebAPI.Controllers
 {
+    [Authorize]
     public class KGrocerItemController : ApiController
-    {//creates a service to be used via function calls
+    {
+
         private KGrocerItemService CreateKGrocerItemService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
@@ -19,15 +21,16 @@ namespace KMarket.WebAPI.Controllers
             return kGrocerItemService;
         }
 
-        //get-all kgrocer items in kgrocer database
+        //get-all kitems in kitems database
         public IHttpActionResult Get()
         {
             KGrocerItemService kGrocerItemService = CreateKGrocerItemService();
-            var meals = kGrocerItemService.GetKGrocerItems();
-            return Ok(meals);
+            var items = kGrocerItemService.GetKGrocerItems();
+            return Ok(items);
         }
 
-        //post (create) new kgrocer item to kgrocer database
+        //post (create) new kitems to kitems database
+
         public IHttpActionResult Post(KGrocerItemCreate kGrocerItem)
         {
             if (!ModelState.IsValid)
@@ -41,15 +44,16 @@ namespace KMarket.WebAPI.Controllers
             return Ok();
         }
 
-        //gets a kgrocer item by id
+        //gets a kitems by id
         public IHttpActionResult Get(int id)
         {
             KGrocerItemService kGrocerItemService = CreateKGrocerItemService();
-            var item = kGrocerItemService.GetKGrocerItemByID(id);
-            return Ok(item);
+            var meal = kGrocerItemService.GetKGrocerItemByID(id);
+            return Ok(meal);
         }
 
-        //updates a kgrocer item by ID (name, price, desc, category)
+        //updates a kitems by ID (name, price, desc, ingr)
+
         public IHttpActionResult Put(KGrocerItemEdit item)
         {
             if (!ModelState.IsValid)

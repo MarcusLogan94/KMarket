@@ -10,74 +10,68 @@ using System.Web.Http;
 
 namespace KMarket.WebAPI.Controllers
 {
-
     [Authorize]
-    public class OrderController : ApiController
+    public class OrderMealController : ApiController
     {
 
         //creates a service to be used via function calls
-
-        private OrderService CreateOrderService()
+        private OrderMealService CreateOrderMealService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
-            var orderService = new OrderService(userId);
-            return orderService;
+            var orderMealService = new OrderMealService(userId);
+            return orderMealService;
         }
 
-        //get-all orders in order database
+        //get-all orders in orders database
         public IHttpActionResult Get()
         {
-            OrderService orderService = CreateOrderService();
-            var orders = orderService.GetOrders();
+            OrderMealService orderMealService = CreateOrderMealService();
+            var orders = orderMealService.GetOrderMeals();
             return Ok(orders);
         }
 
-
         //post (create) new orders to orders database
-        public IHttpActionResult Post(OrderCreate order)
+        public IHttpActionResult Post(OrderMealCreate order)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateOrderService();
+            var service = CreateOrderMealService();
 
-            if (!service.CreateOrder(order))
+            if (!service.CreateOrderMeal(order))
                 return InternalServerError();
 
             return Ok();
         }
 
-
-        //gets a order by id
+        //gets a orders by id
         public IHttpActionResult Get(int id)
         {
-            OrderService orderService = CreateOrderService();
-            var order = orderService.GetOrderByID(id);
+            OrderMealService orderMealService = CreateOrderMealService();
+            var order = orderMealService.GetOrderMealByID(id);
             return Ok(order);
         }
 
-
-        //updates a order by ID (name, price, desc, category)
-        public IHttpActionResult Put(OrderEdit order)
+        //updates a orders by ID (name, price, desc, ingr)
+        public IHttpActionResult Put(OrderMealEdit order)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateOrderService();
+            var service = CreateOrderMealService();
 
-            if (!service.UpdateOrder(order))
+            if (!service.UpdateOrderMeal(order))
                 return InternalServerError();
 
             return Ok();
         }
 
-
-        //deletes order by ID
+        //deletes orders by ID
         public IHttpActionResult Delete(int id)
         {
-            var service = CreateOrderService();
+            var service = CreateOrderMealService();
 
-            if (!service.DeleteOrder(id))
+            if (!service.DeleteOrderMeal(id))
                 return InternalServerError();
 
             return Ok();

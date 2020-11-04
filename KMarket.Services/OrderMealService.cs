@@ -2,7 +2,6 @@
 using KMarket.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -11,11 +10,11 @@ using System.Xml.Schema;
 
 namespace KMarket.Services
 {
-    public class OrderService
+    public class OrderMealService
     {
         private readonly Guid _userId;
 
-        public OrderService(Guid userId)
+        public OrderMealService(Guid userId)
         {
             _userId = userId;
         }
@@ -36,9 +35,7 @@ namespace KMarket.Services
 
                     name = ReferredMeal.Name;
                 }
-
                 else if (DBName == "Item")
-
                 {
                     var ReferredItem =
                         ctx
@@ -50,137 +47,101 @@ namespace KMarket.Services
                 return name;
             }
         }
-        public bool CreateOrder(OrderCreate model)
+        public bool CreateOrderMeal(OrderMealCreate model)
         {
 
             using (var ctx = new ApplicationDbContext())
             {
                 //declare pricecalculation, and then assigns correct Calculated price based on the correct DB object's Price
-
-                double priceCalculation = 0;
-                if (model.OrderType == "Meal")
-                {
-                    var ReferredMeal =
+                
+                var ReferredMeal =
                          ctx
                            .KCafeMeals
-                           .Single(e => e.MealID == model.ObjectID);
+                           .Single(e => e.MealID == model.MealID);
 
-                    priceCalculation = (double)model.Quantity * ReferredMeal.Price;
-                }
-                else if (model.OrderType == "Item")
-                {
-                    var ReferredItem =
-                        ctx
-                          .KGrocerItems
-                          .Single(e => e.ItemID == model.ObjectID);
-                            .KGrocerItems
-                            .Single(e => e.ItemID == model.ObjectID);
-
-                    priceCalculation = (double)model.Quantity * ReferredItem.Price;
-                }
+                double priceCalculation = (double)model.Quantity * ReferredMeal.Price;
 
 
                 var entity =
-                new Order()
+                new OrderMeal()
                 {
                     OwnerID = _userId,
                     LastModifiedID = _userId,
-                    ObjectID = model.ObjectID,
-                    OrderType = model.OrderType,
+                    MealID = model.MealID,
+                    Meal = ReferredMeal,
                     Quantity = model.Quantity,
                     TotalPrice = priceCalculation,
                     AddedUTC = DateTimeOffset.UtcNow,
                     ModifiedUtc = DateTimeOffset.UtcNow,
             };
 
-                ctx.Orders.Add(entity);
+                ctx.OrderMeals.Add(entity);
                 return ctx.SaveChanges() == 1;
             }
         }
-
-        public IEnumerable<OrderListItem> GetOrders()
+        public IEnumerable<OrderMealListItem> GetOrderMeals()
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var query =
-                    ctx.Orders
-                    .Where(e => e.OrderID != null)
+                    ctx.OrderMeals
+                    .Where(e => e.MealID != null)
                     .Select(
                             e =>
-                                new OrderListItem
+                                new OrderMealListItem
                                 {
                                     OrderID = e.OrderID,
-                                    ObjectID = e.ObjectID,
-                                    OrderType = e.OrderType,
+                                    MealID = e.MealID,
                                     Quantity = e.Quantity,
                                     TotalPrice = e.TotalPrice,
-                                    Name = GetNameOfObject(e.OrderType, e.ObjectID),
+                                    Name = e.Meal.Name,
                                     AddedUTC = e.AddedUTC,
                                     ModifiedUtc = e.ModifiedUtc
                                 }
                         );
-              
-                IEnumerable<OrderListItem> queryArray = query.ToArray();
 
-                for(int i = 0; i < queryArray.Count(); i++)
-                {
-                    queryArray.ElementAt(i).Name = GetNameOfObject(queryArray.ElementAt(i).OrderType, queryArray.ElementAt(i).ObjectID);
-                }
-
-                return queryArray;
+                return query.ToArray();
             }
         }
 
-        public OrderDetail GetOrderByID(int id)
+        public OrderMealDetail GetOrderMealByID(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
-                        .Orders
+                        .OrderMeals
                         .Single(e => e.OrderID == id);
                 return
-                    new OrderDetail
+
+                    new OrderMealDetail
                     {
                         OrderID = entity.OrderID,
-                        ObjectID = entity.ObjectID,
-                        OrderType = entity.OrderType,
+                        MealID = entity.MealID,
                         Quantity = entity.Quantity,
                         TotalPrice = entity.TotalPrice,
-                        Name = GetNameOfObject(entity.OrderType, entity.ObjectID),
+                        Name = entity.Meal.Name,
                         AddedUTC = entity.AddedUTC,
                         ModifiedUtc = entity.ModifiedUtc
+
                     };
             }
         }
 
-        public bool UpdateOrder(OrderEdit model)
+        public bool UpdateOrderMeal(OrderMealEdit model)
         {
-
             using (var ctx = new ApplicationDbContext())
             {
 
-                double calculatedPrice = 0;
-
-                if(model.OrderType == "Meal")
-                {
-                    calculatedPrice = ctx.KCafeMeals.Single(e => e.MealID == model.ObjectID).Price * (double) model.Quantity;
-                }
-                else if (model.OrderType == "Item")
-                {
-                    calculatedPrice = ctx.KGrocerItems.Single(e => e.ItemID == model.ObjectID).Price * (double) model.Quantity;
-
-                }
-
                 var entity =
                     ctx
-                        .Orders
+                        .OrderMeals
                         .Single(e => e.OrderID == model.OrderID);
 
-                entity.ObjectID = model.ObjectID;
-                entity.OrderType = model.OrderType;
+                entity.MealID = model.MealID;
+                entity.Meal = ctx.KCafeMeals.Single(e => e.MealID == model.MealID);
                 entity.Quantity = model.Quantity;
-                entity.TotalPrice = calculatedPrice;
+                entity.TotalPrice = entity.Meal.Price * (double) model.Quantity;
                 entity.LastModifiedID = _userId;
                 entity.ModifiedUtc = DateTimeOffset.UtcNow;
 
@@ -188,16 +149,16 @@ namespace KMarket.Services
             }
         }
 
-        public bool DeleteOrder(int orderID)
+        public bool DeleteOrderMeal(int orderID)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
-                        .Orders
+                        .OrderMeals
                         .Single(e => e.OrderID == orderID);
 
-                ctx.Orders.Remove(entity);
+                ctx.OrderMeals.Remove(entity);
 
                 return ctx.SaveChanges() == 1;
             }

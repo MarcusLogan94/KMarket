@@ -10,6 +10,9 @@ namespace KMarket.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+
+            ContextKey = "KMarket.Data.ApplicationDbContext";
+
         }
 
         protected override void Seed(KMarket.Data.ApplicationDbContext context)
