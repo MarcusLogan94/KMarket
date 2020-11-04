@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace KMarket.Data
 {
+
     //defines the meals hosted at KCafe
     public class KGrocerItem
     {

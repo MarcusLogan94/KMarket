@@ -8,32 +8,26 @@ using System.Threading.Tasks;
 
 namespace KMarket.Data
 {
-    //defines the order class for tracking orders of a specific type of item
-    //(one item type at a time right now, not multiple items in order)
-    public class Order
+    // defines the order class for tracking orders of a specific type of item
+    // (one item type at a time right now, not multiple items in order)
+    public class OrderItem
     {
-
         [Key]
         public int OrderID { get; set; }
 
         [Required]
         public Guid OwnerID { get; set; }
-
-
         public Guid LastModifiedID { get; set; }
 
-
-        public Guid LastModifiedID { get; set; }
+        [ForeignKey("Item")]
+        [Required]
+        public int ItemID { get; set; }
 
         [Required]
-        public int ObjectID { get; set; }
-
-        [Required]
-        public string OrderType { get; set; }
+        public KGrocerItem Item { get; set; }
 
         [Required]
         public int Quantity { get; set; }
-
 
         [Required]
         public double TotalPrice { get; set; }
@@ -43,6 +37,6 @@ namespace KMarket.Data
 
         public DateTimeOffset? ModifiedUtc { get; set; }
 
-        
     }
 }
+

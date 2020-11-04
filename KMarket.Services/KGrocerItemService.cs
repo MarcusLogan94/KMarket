@@ -29,7 +29,6 @@ namespace KMarket.Services
                     DaysToExpire = model.DaysToExpire,
                     AddedUTC = DateTimeOffset.Now,
                     ModifiedUtc = DateTimeOffset.Now
-                    
                 };
 
             using (var ctx = new ApplicationDbContext())
@@ -59,7 +58,7 @@ namespace KMarket.Services
                                     Category = e.Category,
                                     DaysToExpire = e.DaysToExpire,
                                     AddedUTC = e.AddedUTC
-                                    
+
                                 }
                         );
 
@@ -86,7 +85,6 @@ namespace KMarket.Services
                         DaysToExpire = entity.DaysToExpire,
                         AddedUTC = entity.AddedUTC,
                         ModifiedUtc = entity.ModifiedUtc
-                        
 
                     };
             }
@@ -107,13 +105,15 @@ namespace KMarket.Services
                 entity.Category = model.Category;
                 entity.DaysToExpire = model.DaysToExpire;
                 entity.ModifiedUtc = DateTimeOffset.UtcNow;
-                
+
 
                 return ctx.SaveChanges() == 1;
             }
         }
 
+
         public bool DeleteKGrocerItem(int itemID)
+
         {
             using (var ctx = new ApplicationDbContext())
             {

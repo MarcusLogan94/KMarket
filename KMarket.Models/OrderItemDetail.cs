@@ -7,17 +7,19 @@ using System.Threading.Tasks;
 
 namespace KMarket.Models
 {
-    public class KGrocerItemListItem
+    public class OrderItemDetail
     {
+        public int OrderID { get; set; }
         public int ItemID { get; set; }
-        public string Name { get; set; }
-        public double Price { get; set; }
-        public string Description { get; set; }
-        public string Category { get; set; }
-        public int DaysToExpire { get; set; }
+        public int Quantity { get; set; }
+        public double TotalPrice { get; set; }
 
-        [Display(Name = "Added")]
+        public string Name { get; set; }
+
+        [Display(Name = "Created")]
         public DateTimeOffset AddedUTC { get; set; }
+        [Display(Name = "Modified")]
+        public DateTimeOffset? ModifiedUtc { get; set; }
 
     }
 }

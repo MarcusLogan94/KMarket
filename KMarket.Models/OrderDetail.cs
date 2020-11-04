@@ -11,23 +11,20 @@ namespace KMarket.Models
     {
         public int OrderID { get; set; }
 
+
         [Display(Name = "ObjectID")]
+
         public int ObjectID { get; set; }
         public string OrderType { get; set; }
         public int Quantity { get; set; }
         public double TotalPrice { get; set; }
 
-
         public string Name { get; set; }
-
 
         [Display(Name = "Created")]
         public DateTimeOffset AddedUTC { get; set; }
         [Display(Name = "Modified")]
         public DateTimeOffset? ModifiedUtc { get; set; }
-
-
-
 
     }
 }

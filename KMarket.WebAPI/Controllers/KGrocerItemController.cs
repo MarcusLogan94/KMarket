@@ -14,7 +14,6 @@ namespace KMarket.WebAPI.Controllers
     public class KGrocerItemController : ApiController
     {
 
-        //creates a service to be used via function calls
         private KGrocerItemService CreateKGrocerItemService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
@@ -31,6 +30,7 @@ namespace KMarket.WebAPI.Controllers
         }
 
         //post (create) new kitems to kitems database
+
         public IHttpActionResult Post(KGrocerItemCreate kGrocerItem)
         {
             if (!ModelState.IsValid)
@@ -53,6 +53,7 @@ namespace KMarket.WebAPI.Controllers
         }
 
         //updates a kitems by ID (name, price, desc, ingr)
+
         public IHttpActionResult Put(KGrocerItemEdit item)
         {
             if (!ModelState.IsValid)
@@ -66,7 +67,7 @@ namespace KMarket.WebAPI.Controllers
             return Ok();
         }
 
-        //deletes kitems by ID
+        //deletes kgrocer item by ID
         public IHttpActionResult Delete(int id)
         {
             var service = CreateKGrocerItemService();

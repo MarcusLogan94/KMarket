@@ -2,6 +2,7 @@
 using KMarket.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -35,7 +36,9 @@ namespace KMarket.Services
 
                     name = ReferredMeal.Name;
                 }
+
                 else if (DBName == "Item")
+
                 {
                     var ReferredItem =
                         ctx
@@ -53,6 +56,7 @@ namespace KMarket.Services
             using (var ctx = new ApplicationDbContext())
             {
                 //declare pricecalculation, and then assigns correct Calculated price based on the correct DB object's Price
+
                 double priceCalculation = 0;
                 if (model.OrderType == "Meal")
                 {
@@ -62,7 +66,6 @@ namespace KMarket.Services
                            .Single(e => e.MealID == model.ObjectID);
 
                     priceCalculation = (double)model.Quantity * ReferredMeal.Price;
-
                 }
                 else if (model.OrderType == "Item")
                 {
@@ -70,9 +73,12 @@ namespace KMarket.Services
                         ctx
                           .KGrocerItems
                           .Single(e => e.ItemID == model.ObjectID);
+                            .KGrocerItems
+                            .Single(e => e.ItemID == model.ObjectID);
 
                     priceCalculation = (double)model.Quantity * ReferredItem.Price;
                 }
+
 
                 var entity =
                 new Order()
@@ -91,6 +97,7 @@ namespace KMarket.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+
         public IEnumerable<OrderListItem> GetOrders()
         {
             using (var ctx = new ApplicationDbContext())
@@ -107,11 +114,12 @@ namespace KMarket.Services
                                     OrderType = e.OrderType,
                                     Quantity = e.Quantity,
                                     TotalPrice = e.TotalPrice,
+                                    Name = GetNameOfObject(e.OrderType, e.ObjectID),
                                     AddedUTC = e.AddedUTC,
                                     ModifiedUtc = e.ModifiedUtc
                                 }
                         );
-
+              
                 IEnumerable<OrderListItem> queryArray = query.ToArray();
 
                 for(int i = 0; i < queryArray.Count(); i++)
@@ -132,7 +140,6 @@ namespace KMarket.Services
                         .Orders
                         .Single(e => e.OrderID == id);
                 return
-
                     new OrderDetail
                     {
                         OrderID = entity.OrderID,
@@ -143,8 +150,6 @@ namespace KMarket.Services
                         Name = GetNameOfObject(entity.OrderType, entity.ObjectID),
                         AddedUTC = entity.AddedUTC,
                         ModifiedUtc = entity.ModifiedUtc
-
-
                     };
             }
         }
@@ -164,6 +169,7 @@ namespace KMarket.Services
                 else if (model.OrderType == "Item")
                 {
                     calculatedPrice = ctx.KGrocerItems.Single(e => e.ItemID == model.ObjectID).Price * (double) model.Quantity;
+
                 }
 
                 var entity =

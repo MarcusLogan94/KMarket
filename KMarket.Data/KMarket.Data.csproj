@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityModels.cs" />
+    <Compile Include="KGrocerItem.cs" />
     <Compile Include="KCafeMeal.cs" />
     <Compile Include="KGrocerItem.cs" />
     <Compile Include="Migrations\202010261851405_InitialCreate.cs" />
@@ -104,6 +105,13 @@
       <DependentUpon>202011032108307_migration3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\202011041440318_migration2.cs" />
+    <Compile Include="Migrations\202011041440318_migration2.Designer.cs">
+      <DependentUpon>202011041440318_migration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="OrderItem.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="OrderMeal.cs" />
     <Compile Include="Order.cs" />
@@ -125,6 +133,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011032108307_migration3.resx">
       <DependentUpon>202011032108307_migration3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202011041440318_migration2.resx">
+      <DependentUpon>202011041440318_migration2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
