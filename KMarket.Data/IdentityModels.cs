@@ -37,6 +37,14 @@ namespace KMarket.Data
 
         public DbSet<KCafeMeal> KCafeMeals { get; set; }
 
+        public DbSet<KGrocerItem> KGrocerItems { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderMeal> OrderMeals { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder

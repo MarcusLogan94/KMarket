@@ -27,7 +27,8 @@ namespace KMarket.Services
                     Description = model.Description,
                     Ingredients = model.Ingredients,
                     AddedUTC = DateTimeOffset.Now,
-                    ModifiedUtc = DateTimeOffset.Now,
+                    ModifiedUtc = DateTimeOffset.Now
+
                 };
 
             using (var ctx = new ApplicationDbContext())
